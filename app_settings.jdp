@@ -23,6 +23,8 @@ ExcludeFromBuildAll=0
 [Files
 src\com\cleverua\bb\example\AppSettingsApplication.java
 src\com\cleverua\bb\example\AppSettingsScreen.java
+src\com\cleverua\bb\settings\FileReader.java
+src\com\cleverua\bb\settings\HashFileReader.java
 src\com\cleverua\bb\settings\Settings.java
 src\com\cleverua\bb\settings\Utils.java
 ]

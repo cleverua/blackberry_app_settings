@@ -4,9 +4,11 @@ import net.rim.device.api.ui.UiApplication;
 import net.rim.device.api.ui.component.Dialog;
 
 import com.cleverua.bb.settings.Settings;
-import com.cleverua.bb.settings.Utils;
 
 public class AppSettingsApplication extends UiApplication {
+    public static final String SETTINGS_FILE = 
+        "file:///SDCard/your_application_dir/your_application.settings";
+    
     private static final String NOT_IMPLEMENTED_MSG = "Not yet implemented";
     private static AppSettingsApplication application;
     private static Settings settings;
@@ -17,11 +19,6 @@ public class AppSettingsApplication extends UiApplication {
     
     public static void main(String[] args) {
         application = new AppSettingsApplication();
-        try {
-        Utils.createDirIncludingAncestors(Settings.SETTINGS_FILE);
-        } catch (Exception e) {
-            Dialog.alert("Exception caught: " + e);
-        }
         application.pushScreen(new AppSettingsScreen());
         application.enterEventDispatcher();
     }
@@ -43,6 +40,6 @@ public class AppSettingsApplication extends UiApplication {
     }
     
     private AppSettingsApplication() {
-        settings = new Settings();
+        settings = Settings.getInstance();
     }
 }

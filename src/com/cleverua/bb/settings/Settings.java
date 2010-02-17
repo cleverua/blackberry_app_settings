@@ -18,36 +18,44 @@ public class Settings {
         settingsHash = new Hashtable();
     }
     
-    public boolean getValue(String key, boolean defaultValue) {
-        Boolean result = (Boolean) settingsHash.get(key);
+    /*public boolean getValue(String key, boolean defaultValue) {
+        Boolean result = Boolean.valueOf(settingsHash.get(key).toString());
         if (result == null) {
             return defaultValue;
         }
         return result.booleanValue();
+    }*/
+    
+    public boolean getValue(String key) {
+        return Utils.stringToBoolean(settingsHash.get(key).toString());
     }
     
     public int getValue(String key, int defaultValue) {
-        Integer result = (Integer) settingsHash.get(key);
+        /*Integer result = new Integer(settingsHash.get(key).toString());
         if (result == null) {
             return defaultValue;
         }
-        return result.intValue();
+        return result.intValue();*/
+        return Integer.parseInt(settingsHash.get(key).toString());
     }
     
     public long getValue(String key, long defaultValue) {
-        Long result = (Long) settingsHash.get(key);
+        /*Long result = new Long(settingsHash.get(key).toString());
         if (result == null) {
             return defaultValue;
         }
-        return result.longValue();
+        return result.longValue();*/
+        return Long.parseLong(settingsHash.get(key).toString());
     }
     
     public float getValue(String key, float defaultValue) {
-        Float result = (Float) settingsHash.get(key);
+        /*Float result = Float.parseFloat(settingsHash.get(key).toString());
+        
         if (result == null) {
             return defaultValue;
         }
-        return result.floatValue();
+        return result.floatValue();*/
+        return Float.parseFloat(settingsHash.get(key).toString());
     }
     
     public String getValue(String key, String defaultValue) {
@@ -102,7 +110,7 @@ public class Settings {
         engine.read();
     }
     
-    public void save(String settingsFilePath) throws IOException {
+    public void save(String settingsFilePath) throws IOException  {
         HashFileReader engine = new HashFileReader(settingsFilePath, settingsHash);
         engine.save();
     }

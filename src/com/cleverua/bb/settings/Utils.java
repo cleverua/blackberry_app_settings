@@ -100,4 +100,8 @@ public class Utils {
             safelyCloseStream(fc);
         }
     }
+
+    public static boolean stringToBoolean(String value) {
+        return value.toLowerCase().equals("true");
+    }
 }

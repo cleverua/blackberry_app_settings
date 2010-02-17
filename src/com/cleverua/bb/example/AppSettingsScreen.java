@@ -31,7 +31,7 @@ public class AppSettingsScreen extends MainScreen {
             Dialog.alert("Unable to load settings: " + e);
         }
         
-        userChoice = new CheckboxField(CHECK_BOX_LABEL, AppSettingsApplication.getSettings().getValue(USER_CHOICE_KEY, false), USE_ALL_WIDTH);
+        userChoice = new CheckboxField(CHECK_BOX_LABEL, AppSettingsApplication.getSettings().getValue(USER_CHOICE_KEY), USE_ALL_WIDTH);
         userText = new EditField(USE_ALL_WIDTH);
         userText.setText(AppSettingsApplication.getSettings().getValue(USER_TEXT_KEY, null));
         

@@ -53,7 +53,7 @@ public class HashFileReader extends FileReader {
         }
     }
 
-    protected void readFile() throws IOException {
+    protected void readFile() throws IOException{
         synchronized (this) {
             FileConnection fc = null;
             InputStream in = null;
@@ -71,7 +71,7 @@ public class HashFileReader extends FileReader {
         }
     }
     
-    private void parse(String data) throws IOException {
+    private void parse(String data) throws IOException{
         String working = data;
         int index = working.indexOf(NL);
 
@@ -87,7 +87,7 @@ public class HashFileReader extends FileReader {
         toProperty(working);
     }
     
-    private void toProperty(String str) throws IOException  {
+    private void toProperty(String str) throws IOException   {
         if(str.length() == 0) {
             return;
         }
@@ -96,10 +96,10 @@ public class HashFileReader extends FileReader {
         String value;
         try {
             value = decode(str.substring(equalsPosition + 1).trim());
+            hash.put(key, value);
         } catch (UnsupportedEncodingException e) {
-            value = null;
+            ;//do not put key-value
         }
-        hash.put(key, value);
     }
     
     private static String encode(String stringToEncode) throws IOException {

@@ -6,12 +6,10 @@ import net.rim.device.api.ui.component.Dialog;
 import com.cleverua.bb.settings.Settings;
 
 public class AppSettingsApplication extends UiApplication {
-    public static final String SETTINGS_FILE = 
-        "file:///SDCard/your_application_dir/your_application.settings";
-    
     private static final String NOT_IMPLEMENTED_MSG = "Not yet implemented";
     private static AppSettingsApplication application;
     private static Settings settings;
+    private static AppSettingsDelegate delegate;
     
     public static AppSettingsApplication instance() {
         return application;
@@ -30,6 +28,10 @@ public class AppSettingsApplication extends UiApplication {
     public static Settings getSettings() {
         return settings;
     }
+    
+    public static AppSettingsDelegate getSettingsDelegate() {
+        return delegate;
+    }
 
     public void showNotImplementedAlert() {
         invokeLater(new Runnable() {
@@ -40,6 +42,7 @@ public class AppSettingsApplication extends UiApplication {
     }
     
     private AppSettingsApplication() {
-        settings = Settings.getInstance();
+        delegate = new AppSettingsDelegate();
+        settings = new Settings(delegate);
     }
 }

@@ -31,12 +31,21 @@ This sample Blackberry application demonstrates an approach for application sett
   public class AppSettingsDelegate extends SettingsDelegate { 
     ...
 
+    private static final boolean USER_CHOICE_DEFAULT = true;
+
     public static final String USER_TEXT_KEY = "userText";
     public static final String USER_CHOICE_KEY = "userChoice";
+
     ...
 
     public boolean getUserChoice() {
-        return Utils.stringToBoolean(getData().get(USER_CHOICE_KEY).toString());
+        Object read = getData().get(USER_CHOICE_KEY);
+        
+        if (read == null) {
+            return USER_CHOICE_DEFAULT;
+        }
+        
+        return ((Boolean) read).booleanValue();
     }
     
     public void setUserChoice(boolean userChoice) {

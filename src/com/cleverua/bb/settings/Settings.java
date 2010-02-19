@@ -25,19 +25,19 @@ public class Settings {
 	}
 	
 	public void initialize() throws SettingsException {
-		load();
+	    editor.read();
 		set(VERSION_KEY, new Integer(delegate.version()));
 	}
 
 	public void flush() throws SettingsException {
-		save();
+	    editor.save();
 	}
 	
-	public void set(String key, Object value) {
+	private void set(String key, Object value) {
 		delegate.put(key, value);
     }
 	
-	public Object get(String key) {
+	private Object get(String key) {
 		return delegate.get(key);
 	}
 	
@@ -53,14 +53,6 @@ public class Settings {
 		return result;
 	}
 
-	private void load() throws SettingsException {
-        editor.read();
-	}
-
-	private void save() throws SettingsException {
-        editor.save();
-	}
-
 	private class SettingsFileEditor {
 	    private static final char NL = '\n';
 	    private static final char EQ = '=';
@@ -73,15 +65,15 @@ public class Settings {
 	    }
 	    
 	    public void read() throws SettingsException {
-	        if(!Utils.isFilePresent(fileName)) {
+	        if (!Utils.isFilePresent(fileName)) {
 	            try {
-                    Utils.createFileIncludingDirs(fileName);
+	                Utils.createFile(fileName);
                 } catch (IOException e) {
                     throw new SettingsException(e);
                 }
-	         } else {
-	             readFile();
-	         }  
+	        } else {
+	            readFile();
+	        }  
 	    }
 
 	    public void save() throws SettingsException {
@@ -100,6 +92,8 @@ public class Settings {
 	                writer.write(key + EQ + encode(get(key).toString()) + NL);
 	            }
 
+	            writer.flush();
+	            
 	        } catch (IOException e) {
 	            throw new SettingsException(e);
             } finally {
@@ -110,23 +104,19 @@ public class Settings {
 	    }
 
 	    private void readFile() throws SettingsException {
-	        synchronized (this) {
-	            FileConnection fc = null;
-	            InputStream in = null;
+            FileConnection fc = null;
+            InputStream in = null;
 
-	            try {
-	                fc = (FileConnection) Connector.open(delegate.filename(), Connector.READ);
-	                if(fc.exists()) {
-	                    in = fc.openInputStream();
-	                    parse(Utils.getStringFromStream(in));
-	                }
-	            } catch (IOException e) {
-                    throw new SettingsException(e);
-                } finally {
-	                Utils.safelyCloseStream(fc);
-	                Utils.safelyCloseStream(in);
-	            }               
-	        }
+            try {
+                fc = (FileConnection) Connector.open(delegate.filename(), Connector.READ);
+                in = fc.openInputStream();
+                parse(Utils.getStringFromStream(in));
+            } catch (IOException e) {
+                throw new SettingsException(e);
+            } finally {
+                Utils.safelyCloseStream(in);
+                Utils.safelyCloseStream(fc);
+            }               
 	    }
 	    
 	    private void parse(String data) throws SettingsException {
@@ -137,16 +127,16 @@ public class Settings {
 	            String tmp = "";
 	            if (index > 0) {
 	                tmp = working.substring(0, index);
-	                toProperty(tmp);
+	                populateSetting(tmp);
 	            }
 	            working = working.substring(index + 1);
 	            index = working.indexOf(NL);
 	        }
-	        toProperty(working);
+	        populateSetting(working);
 	    }
 	    
-	    private void toProperty(String str) throws SettingsException   {
-	        if(str.length() == 0) {
+	    private void populateSetting(String str) throws SettingsException   {
+	        if (str.length() == 0) {
 	            return;
 	        }
 	        int equalsPosition = str.indexOf(EQ);
@@ -155,9 +145,7 @@ public class Settings {
             try {
                 value = decode(str.substring(equalsPosition + 1).trim());
                 set(key, value);
-            } catch (UnsupportedEncodingException e) {
-                throw new SettingsException(e);
-            } catch (IOException e) {
+            } catch (Exception e) {
                 throw new SettingsException(e);
             }
 	    }

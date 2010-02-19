@@ -112,11 +112,6 @@ public class Utils {
             safelyCloseStream(fc);
         }
     }
-    
-    public static void createFileIncludingDirs(String filePath) throws IOException {
-        createDirIncludingAncestors(filePath);
-        createFile(filePath);
-    }
 
     public static boolean stringToBoolean(String value) {
         return value.toLowerCase().equals("true");

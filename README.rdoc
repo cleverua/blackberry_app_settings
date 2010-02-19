@@ -1,0 +1,76 @@
+== DESCRIPTION
+
+This sample Blackberry application demonstrates an approach for application settings.
+
+== USAGE
+
+=== Define your SettingsDelegate descendant class to set and get your application settings.
+
+  public class AppSettingsDelegate extends SettingsDelegate { }
+
+=== Implement version() and filename() methods
+
+  public class AppSettingsDelegate extends SettingsDelegate { 
+
+    private static final int VERSION = 1;
+
+    public static final String SETTINGS_FILE = 
+        "file:///SDCard/your_application_dir/your_application.settings";
+
+    public int version() {
+        return VERSION;
+    }
+    
+    public String filename() {
+        return SETTINGS_FILE;
+    }
+  }
+
+=== Define your settings keys and methods to manage application settings
+
+  public class AppSettingsDelegate extends SettingsDelegate { 
+    ...
+
+    public static final String USER_TEXT_KEY = "userText";
+    public static final String USER_CHOICE_KEY = "userChoice";
+    ...
+
+    public boolean getUserChoice() {
+        return Utils.stringToBoolean(getData().get(USER_CHOICE_KEY).toString());
+    }
+    
+    public void setUserChoice(boolean userChoice) {
+        getData().put(USER_CHOICE_KEY, new Boolean(userChoice));
+    }
+    
+    public String getUserText() {
+        return getData().get(USER_TEXT_KEY).toString();
+    }
+    
+    public void setUserText(String userText) {
+        getData().put(USER_TEXT_KEY, userText);
+    }
+  }
+
+=== To manage your application settings use Settings class and your SettingsDelegate descendant class defined above
+
+  AppSettingsDelegate delegate = new AppSettingsDelegate();
+  Settings settings = new Settings(delegate);
+
+  try {
+      settings.initialize();
+  } catch (SettingsException e) {
+      Dialog.alert("Unable to load settings: " + e);
+  }
+
+  ...
+
+  try {
+      settings.flush();
+  } catch (Exception e) {
+      Dialog.alert("Unable to save settings: " + e);
+  }
+
+== EXAMPLES
+
+To see an example please launch AppSettingsApplication (com.cleverua.bb.example) in BlackBerry device simulator.

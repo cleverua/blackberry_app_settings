@@ -28,7 +28,7 @@ public class AppSettingsScreen extends MainScreen {
         try {
             AppSettingsApplication.getSettings().initialize();
         } catch (SettingsException e) {
-            Dialog.alert("Unable to load settings: " + e);
+            Dialog.alert("Unable to load settings: " + e.getCause());
         }
         boolean userChoiceSetting = AppSettingsApplication.getSettingsDelegate().getUserChoice();
         userChoice = new CheckboxField(CHECK_BOX_LABEL, userChoiceSetting, USE_ALL_WIDTH);

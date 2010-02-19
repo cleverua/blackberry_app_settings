@@ -47,10 +47,10 @@ public class AppSettingsScreen extends MainScreen {
                 AppSettingsApplication.getSettingsDelegate().setUserText(userText.getText());
                 try {
                     AppSettingsApplication.getSettings().flush();
-                } catch (Exception e) {
+                    Dialog.inform(SETTINGS_SUCCESSFUL_DIALOG);
+                } catch (SettingsException e) {
                     Dialog.alert("Unable to save settings: " + e);
                 }
-                Dialog.inform(SETTINGS_SUCCESSFUL_DIALOG);
             }
         });
         setStatus(saveButton);

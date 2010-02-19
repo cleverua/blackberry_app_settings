@@ -49,7 +49,7 @@ public class AppSettingsScreen extends MainScreen {
                     AppSettingsApplication.getSettings().flush();
                     Dialog.inform(SETTINGS_SUCCESSFUL_DIALOG);
                 } catch (SettingsException e) {
-                    Dialog.alert("Unable to save settings: " + e);
+                    Dialog.alert("Unable to save settings: " + e.getCause());
                 }
             }
         });

@@ -22,11 +22,10 @@ AutoRestart=0
 ExcludeFromBuildAll=0
 [Files
 src\com\cleverua\bb\example\AppSettingsApplication.java
-src\com\cleverua\bb\example\AppSettingsDelegate.java
 src\com\cleverua\bb\example\AppSettingsScreen.java
-src\com\cleverua\bb\settings\Settings.java
-src\com\cleverua\bb\settings\SettingsDelegate.java
-src\com\cleverua\bb\settings\SettingsException.java
+src\com\cleverua\bb\example\Settings.java
+src\com\cleverua\bb\settings\SettingsEngine.java
+src\com\cleverua\bb\settings\SettingsEngineException.java
 src\com\cleverua\bb\settings\Utils.java
 ]
 HaveAlxImports=0

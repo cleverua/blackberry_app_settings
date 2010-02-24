@@ -1,8 +1,8 @@
 package com.cleverua.bb.settings;
 
-public class SettingsException extends Exception {
+public class SettingsEngineException extends Exception {
 	private Throwable cause;
-	public SettingsException(Throwable cause) {
+	public SettingsEngineException(Throwable cause) {
 		super();
 		this.cause = cause;
 	}

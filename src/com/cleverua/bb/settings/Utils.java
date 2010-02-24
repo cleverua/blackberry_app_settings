@@ -101,7 +101,7 @@ public class Utils {
         }
     }
     
-    public static void createFile(String filePath) throws IOException {
+    public static void createFileIfNotPresent(String filePath) throws IOException {
         FileConnection fc = null;
         try {
             fc = (FileConnection) Connector.open(filePath, Connector.READ_WRITE);

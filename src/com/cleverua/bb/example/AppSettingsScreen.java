@@ -12,9 +12,7 @@ import com.cleverua.bb.settings.SettingsEngineException;
 public class AppSettingsScreen extends MainScreen {
     private static final String SETTINGS_SUCCESSFUL_DIALOG = "Settings were saved successfully!";
     private static final String SAVE_BUTTON_LABEL = "Save settings";
-//    private static final String CHECK_BOX_LABEL = "User choice";
     
-//    private CheckboxField userChoice;
     private EditField userText;
     private EditField description;
     

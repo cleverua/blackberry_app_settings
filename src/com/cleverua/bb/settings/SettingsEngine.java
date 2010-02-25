@@ -32,7 +32,56 @@ class SettingsEngine extends Hashtable {
         return put(key, value);
     }
 
-    public synchronized void load(InputStream inStream) throws SettingsEngineException {
+    public void load() throws SettingsEngineException {
+        try {
+            Utils.createFileIfNotPresent(settingsFileName);
+        } catch (IOException e) {
+            throw new SettingsEngineException(e);
+        }
+        readFile();
+    }
+
+    public void save() throws SettingsEngineException {
+        try {
+            Utils.createFileIfNotPresent(settingsFileName);
+        } catch (IOException e) {
+            throw new SettingsEngineException(e);
+        }
+        saveFile();
+    }
+
+    public String getProperty(String key) {
+        Object oval = super.get(key);
+        String sval = (oval instanceof String) ? (String)oval : null;
+        return sval;
+    }
+
+    public String getProperty(String key, String defaultValue) {
+        String val = getProperty(key);
+        return (val == null) ? defaultValue : val;
+    }
+
+    public Enumeration propertyNames() {
+        Hashtable h = new Hashtable();
+        enumerate(h);
+        return h.keys();
+    }
+
+    public void list(OutputStream out) throws SettingsEngineException {
+        try {
+        Hashtable h = new Hashtable();
+        enumerate(h);
+        for (Enumeration e = h.keys() ; e.hasMoreElements() ;) {
+            String key = (String)e.nextElement();
+            String val = (String)h.get(key);
+            out.write(getOutputLine(key + '=' + val));
+        }
+        } catch (Exception e) {
+            throw new SettingsEngineException(e);
+        }
+    }
+
+    private synchronized void load(InputStream inStream) throws SettingsEngineException {
         LineReader lineReader = new LineReader(inStream);
         try {
             while (true) {
@@ -114,7 +163,7 @@ class SettingsEngine extends Hashtable {
         } 
     }
 
-    public synchronized void save(OutputStream out, String header) throws SettingsEngineException {
+    private synchronized void save(OutputStream out, String header) throws SettingsEngineException {
         try {
             if (header != null) {
                 out.write(getOutputLine('#' + header));
@@ -136,56 +185,7 @@ class SettingsEngine extends Hashtable {
             throw new SettingsEngineException(e);
         }
     }
-
-    public void load() throws SettingsEngineException {
-        try {
-            Utils.createFileIfNotPresent(settingsFileName);
-        } catch (IOException e) {
-            throw new SettingsEngineException(e);
-        }
-        readFile();
-    }
-
-    public void save() throws SettingsEngineException {
-        try {
-            Utils.createFileIfNotPresent(settingsFileName);
-        } catch (IOException e) {
-            throw new SettingsEngineException(e);
-        }
-        saveFile();
-    }
-
-    public String getProperty(String key) {
-        Object oval = super.get(key);
-        String sval = (oval instanceof String) ? (String)oval : null;
-        return sval;
-    }
-
-    public String getProperty(String key, String defaultValue) {
-        String val = getProperty(key);
-        return (val == null) ? defaultValue : val;
-    }
-
-    public Enumeration propertyNames() {
-        Hashtable h = new Hashtable();
-        enumerate(h);
-        return h.keys();
-    }
-
-    public void list(OutputStream out) throws SettingsEngineException {
-        try {
-        Hashtable h = new Hashtable();
-        enumerate(h);
-        for (Enumeration e = h.keys() ; e.hasMoreElements() ;) {
-            String key = (String)e.nextElement();
-            String val = (String)h.get(key);
-            out.write(getOutputLine(key + '=' + val));
-        }
-        } catch (Exception e) {
-            throw new SettingsEngineException(e);
-        }
-    }
-
+    
     private byte[] getOutputLine(String str) throws UnsupportedEncodingException {
         return (str + '\n').getBytes(UTF_8);
     }

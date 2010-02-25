@@ -37,7 +37,7 @@ public class Settings {
         if (!loaded) {
             throw new IllegalStateException("Should be loaded first");
         }
-        return engine.getProperty(USER_TEXT_KEY, null);
+        return engine.getProperty(USER_TEXT_KEY);
     }
     
     public synchronized void setUserText(String value) {

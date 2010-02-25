@@ -1,0 +1,39 @@
+== DESCRIPTION
+
+This sample Blackberry application demonstrates an approach for application settings.
+
+== USAGE
+
+=== Define the SettingsEngine object passing settings the file name as constructor argument:
+
+  public static final String SETTINGS_FILE = "file:///SDCard/your_application.settings";
+
+  ...
+
+  SettingsEngine engine = new SettingsEngine(SETTINGS_FILE);
+
+=== Use SettingsEngine load() method to load settings from the specified file:
+
+  engine.load();
+
+=== Use SettingsEngine getProperty(String key) or getProperty(String key, String defaultValue)  methods to get your settings:
+
+  public static final String USER_TEXT_KEY = "userText";
+
+  ...
+
+  String userText = engine.getProperty(USER_TEXT_KEY);
+
+=== Use SettingsEngine setProperty(String key, String value) method to put your setting value. Multiline settings values are supported as well.
+
+  public void setUserText(String value) {
+      engine.setProperty(USER_TEXT_KEY, value);
+  }
+
+=== Use SettingsEngine save() method to save your settings to specified file.
+
+  engine.save();
+
+== EXAMPLES
+
+To see an example please launch AppSettingsApplication (com.cleverua.bb.example) in BlackBerry device simulator.

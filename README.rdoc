@@ -4,7 +4,7 @@ This sample Blackberry application demonstrates an approach for application sett
 
 == USAGE
 
-=== Define the SettingsEngine object passing settings the file name as constructor argument:
+=== Define the SettingsEngine object passing the settings file name as constructor argument:
 
   public static final String SETTINGS_FILE = "file:///SDCard/your_application.settings";
 
@@ -24,7 +24,7 @@ This sample Blackberry application demonstrates an approach for application sett
 
   String userText = engine.getProperty(USER_TEXT_KEY);
 
-=== Use SettingsEngine setProperty(String key, String value) method to put your setting value. Multiline settings values are supported as well.
+=== Use SettingsEngine setProperty(String key, String value) method to put your setting value. Multiline values are supported as well.
 
   public void setUserText(String value) {
       engine.setProperty(USER_TEXT_KEY, value);
